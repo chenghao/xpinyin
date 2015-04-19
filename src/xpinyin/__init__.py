@@ -120,18 +120,24 @@ class Pinyin(object):
 
         return splitter.join(result)
 
-    def get_initial(self, char=u'你'):
+    def get_initial(self, char=u'你', lower=True):
         try:
-            return self.dict["%X" % ord(char)].split(" ")[0][0]
+            if lower:
+                return self.dict["%X" % ord(char)].split(" ")[0][0].lower()
+            else:
+                return self.dict["%X" % ord(char)].split(" ")[0][0]
         except KeyError:
             return char
 
-    def get_initials(self, chars=u'你好', splitter=u'-'):
+    def get_initials(self, chars=u'你好', splitter=u'-', lower=True):
         result = []
         flag = 1
         for char in chars:
             try:
-                result.append(self.dict["%X" % ord(char)].split(" ")[0][0])
+                if lower:
+                    result.append(self.dict["%X" % ord(char)].split(" ")[0][0].lower())
+                else:
+                    result.append(self.dict["%X" % ord(char)].split(" ")[0][0])
                 flag = 1
             except KeyError:
                 if flag:
